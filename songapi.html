@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="artist"> artist</div>
+    <script>
+
+
+
+
+            //$(".artist").append(artistname);
+
+ 
+
+              
+                $.ajax({
+                    url:" http://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category:Lists_of_songs_recorded_by_American_artists",
+                   
+                    method: "GET"
+                }).then(function (response) {
+
+  console.log(response)
+var americancat=response.query.categorymembers
+for (var i = 0; i< americancat.length;i++ ) {
+
+
+ i++
+
+var songlist=americancat[i]
+
+                  
+                    console.log(songlist.title)
+                }
+
+      
+        $.ajax({
+            url: "http://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + songlist.title + "&prop=links",
+            method: "GET"
+        }).then(function (response) {
+        console.log(response)
+               console.log(response.parse.links[i]["*"]) 
+                
+                }) 
+            })
+
+
+
+    </script>
+
+</body>
+
+</html>
