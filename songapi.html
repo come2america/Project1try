@@ -63,10 +63,9 @@ $("#searchbutton").submit(function (event) {
                 });
                 $('#result').append(html);
 
+               
             })
-
             
-                $("#showskill").attr(src = "https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2F"+html)
             })
             
 
@@ -95,9 +94,10 @@ $("#searchbutton").submit(function (event) {
 
         })
 
+     
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
+    <script src="./javascript.js"></script>
 
     <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 
@@ -109,8 +109,23 @@ $("#searchbutton").submit(function (event) {
     </form>
 
     <div id="result"></div>
-    <iframe id="showskill" allowtransparency="true" scrolling="no" frameborder="no" src="" style="width: 32px; height: 32px;"></iframe>
+    <div id="player"></div>
 
+    <div id="login-container" class="pre-auth">
+            This application requires access to your YouTube account.
+            Please <a href="#" id="login-link">authorize</a> to continue.
+           </div>
+           <div id="buttons" class="post-auth">
+           <label> <input id="query" value='cats' type="text"/><button id="search-button" >Search</button></label>
+           </div>
+           <div id="search-container">
+           </div>
+           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+           <script src="./auths.js"></script>
+           <script src="./javascript.js"></script>
+           <script src="./search.js"></script>
+           <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
+           
 </body>
 
 </html>

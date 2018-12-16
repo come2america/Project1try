@@ -1,69 +1,43 @@
-
-
-$(document).ready(function () {
-
-  $('#search-button').keyup(function () {
-
-    // the search term
-    var q = $(song);
-
-    // container to display search results
-    var $results = $('#search-container');
-
-    // YouTube Data API base URL (JSON response)
-    var url = "http://gdata.youtube.com/feeds/api/videos/?v=2&alt=jsonc&callback=?"
-
-    // set paid-content as false to hide movie rentals
-    url = url + '&paid-content=false';
-
-    // set duration as long to filter partial uploads
-    url = url + '&duration=long';
-
-    // order search results by view count
-    url = url + '&orderby=viewCount';
-
-    // we can request a maximum of 50 search results in a batch
-    url = url + '&max-results=50';
-
-    $.getJSON(url + "&q=" + q, function (json) {
-
-      var count = 0;
-
-      if (json.data.items) {
-
-        var items = json.data.items;
-        var html = "";
-
-        items.forEach(function (item) {
-
-          // Check the duration of the video, 
-          // full-length movies are generally longer than 1 hour
-          var duration = Math.round((item.duration) / (60 * 60));
-
-          // Filter out videos that aren't in the Film or Movies category
-          if ((duration > 1) && (item.category == "Movies" || item.category == "Film")) {
-
-            // Include the YouTube Watch URL youtu.be 
-            html += '<p><a href="http://youtu.be/' + item.id + '">';
-
-            // Add the default video thumbnail (default quality)
-            html += '<img src="http://i.ytimg.com/vi/' + item.id + '/default.jpg">';
-
-            // Add the video title and the duration
-            html += '<h2>' + item.title + ' ' + item.duration + '</h2></a></p>';
-            count++;
-          }
-        });
-      }
-
-      // Did YouTube return any search results?
-      if (count === 0) {
-        $results.html("No videos found");
-      } else {
-        // Display the YouTube search results
-        $results.html(html);
-      }
-    });
+function keyWordsearch(){
+  gapi.client.setApiKey('AIzaSyDr5q5ourA7gmd_wFog9atdII5hkC-tWI4');
+  gapi.client.load('youtube', 'v3', function() {
+          makeRequest();
   });
-});
+}
 
+function makeRequest(){
+  var q = $(song);
+  var request = gapi.client.youtube.search.list({
+      q: q,
+      part: 'snippet'                        
+  });
+  request.execute(function(response){
+      var str = JSON.stringify(response.result,'',4);
+      $('#search-container').val( str);
+      makeControl(response);
+  });
+}
+
+function makeControl(resp){
+  var stList = '<table id="res1" border="1" cellspacing="1" width="100%"><tbody>'; 
+  for (var i=0; i<resp.items.length;i++){
+      var vid = resp.items[i].id.videoId; 
+      var tit = resp.items[i].snippet.title;
+      if(typeof vid != 'undefined'){    
+          stList += '<tr><td style="width:80px;vertical-align:top">'+
+            '<a class="show" href="#" title="'+ vid + '" onclick="playVid(this);'+
+            ' return false">'+
+            '<img  width="80" height="60" src="http://img.youtube.com/vi/'+ 
+            vid +'/default.jpg"></a></td>'+
+            '<td><b>'+i+'</b>-'+ tit +'</td></tr>';
+      }
+  }
+  document.getElementById('list1').innerHTML = stList + '</tbody></table>';
+  //HTML: <div id="list1" 
+  //style="width:853px;height:400px;overflow:auto;background-color:#EEEEEE">
+  //</div>
+}
+
+function playVid(thi){
+  var st = 'https://www.youtube.com/embed/'+thi.title+'?autoplay=1';
+  document.getElementById('player').src = st; }
