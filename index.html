@@ -5,125 +5,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="Assets/CSS/styles.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+
+
+    <title>Song City</title>
 </head>
 
 <body>
 
 
+    <h1 class="main">Song City</h1>
 
+    <div class="container">
 
+        <div class="row">
+            <form>
+                <div class="input-field col s3">
+                    <input placeholder="123 Main Street" id="street" type="text" class="validate">
+                    <label class="active" for="street">Address</label>
+                </div>
+                <div class="input-field col s3">
+                    <input placeholder="Irvine" id="city" type="text" class="validate">
+                    <label class="active" for="city">City</label>
+                </div>
+                <div class="input-field col s3">
+                    <input placeholder="CA" id="state" type="text" class="validate">
+                    <label class="active" for="state">State</label>
+                </div>
+                <div class="input-field col s3">
+                    <input placeholder="92618" id="zip" type="text" class="validate">
+                    <label class="active" for="zip">Zip Code</label>
+                </div>
+        </div>
+        <div class="row center-align">
+            <button class="btn waves-effect waves-light" id="submit" type="button" name="action"><i class="material-icons right">audiotrack</i>Submit
+            </button>
+        </div>
+        </form>
 
-    <script>
+        <div class="row">
+            <div class="col s12 iframe-container">
+                <div class="map center-align" id="map">
+                    <div class="gmap_canvas"><iframe width="600" height="350" id="gmap_canvas" src="https://maps.google.com/maps?q=510%20e%20peltason%20irvine&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col s5 music-row info">
+                <h5>Title: <span id="title"></span></h5>
+                <h5>Artist: <span id="artist"></span></h5>
+                <h5 id="wiki"></h5>
+            </div>
 
-
-
-        //$(".artist").append(artistname);
-
-
-        function songlistgetter(songlist) {
-
-            //console.log("songlist", songlist)
-            $.ajax({
-
-                url: "http://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + songlist.title + "&prop=links",
-                method: "GET"
-            }).then(function (result) {
-                //console.log(result.parse.links.length)
-                var songtitle = songlist.title
-                //console.log("artist", result);
-                console.log(songtitle);
-
-
-                for (var y = 0; y < songtitle.length; y++) {
-
-                    
-console.log(result);
-                    var song = result.parse.links[80]["*"]
-                    console.log(song)
-                    // 
-                }
-
-$("#searchbutton").submit(function (event) {
-
-                event.preventDefault();
-
-                // var $form = $(this),
-                //     term = $form.find('input[name="s"]').val(),
-
-              });
-
-            var fmurl = "http://ws.audioscrobbler.com/2.0/?method=track.search&track="+ song+ "&api_key=6708bbdc11823ca7aa45e4683b70ee1e&format=json&callback=?";
-            
-            $.getJSON(fmurl, function (data) {
-                var html = '';
-                $.each(data.results.trackmatches.track, function (i, item) {
-                    html += "<p>" + item.name + " - " + item.artist + "</p>";
-                });
-                $('#result').append(html);
-
-               
-            })
-            
-            })
-            
-
-
-        }
-
-
-        $.ajax({
-            url: " http://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category:Lists_of_songs_recorded_by_American_artists",
-
-            method: "GET"
-        }).then(function (response) {
-
-            // console.log(response)
-            var americancat = response.query.categorymembers
-            //console.log(americancat);
-
-            for (var i = 0; i < americancat.length; i++) {
+            <div class="col s7 music-row " id="linkhere">
+             <a></a>
+            </div>
+        </div>
 
 
 
 
-                var songlist = americancat[i]
-                songlistgetter(songlist)
-            }
 
-        })
+    </div> <!-- /container div-->
 
-     
-    </script>
-  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="Assets/JavaScript/app.js"></script>
 
-    <p>Hola!</p>
-
-    <form id="searchForm">
-
-        <input type="submit" id=searchbutton value="Search" />
-    </form>
-
-    <div id="result"></div>
-    <div id="player"></div>
-
-    <div id="login-container" class="pre-auth">
-            This application requires access to your YouTube account.
-            Please <a href="#" id="login-link">authorize</a> to continue.
-           </div>
-           <div id="buttons" class="post-auth">
-           <label> <input id="query" value='cats' type="text"/><button id="search-button" >Search</button></label>
-           </div>
-           <div id="search-container">
-           </div>
-           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-           <!-- <script src="./auths.js"></script>
-           <script src="./javascript.js"></script>
-           <script src="./search.js"></script> -->
-           <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"> </script>
-           
 </body>
 
 </html>
