@@ -30,7 +30,7 @@ function songlistgetter(songlist) {
     //console.log("songlist", songlist)
     $.ajax({
 
-        url: "http://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + songlist.title + "&prop=links",
+        url: "https://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + songlist.title + "&prop=links",
         method: "GET"
     }).then(function (result) {
         //console.log(result.parse.links.length)
@@ -55,7 +55,7 @@ function songlistgetter(songlist) {
         //     term = $form.find('input[name="s"]').val(),
 
       
-    var fmurl = "http://ws.audioscrobbler.com/2.0/?method=track.search&track="+ song+ "&api_key=6708bbdc11823ca7aa45e4683b70ee1e&format=json&callback=?";
+    var fmurl = "https://ws.audioscrobbler.com/2.0/?method=track.search&track="+ song+ "&api_key=6708bbdc11823ca7aa45e4683b70ee1e&format=json&callback=?";
     
     $.getJSON(fmurl, function (data) {
         console.log (data)
@@ -91,7 +91,7 @@ $("#linkhere").append( htmllink);
 
 
 $.ajax({
-    url: " http://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category:Lists_of_songs_recorded_by_American_artists",
+    url: " https://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category:Lists_of_songs_recorded_by_American_artists",
 
     method: "GET"
 }).then(function (response) {
