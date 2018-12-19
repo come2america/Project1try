@@ -161,7 +161,7 @@ $("#submit").on("click", function () {
 
 
 
-        var queryURL =  " http://www.mapquestapi.com/geocoding/v1/address?key=" + apiKey + "&adminArea3=" + state + "&adminArea1=US&adminArea5=" + city + "&street=" + street;
+        var queryURL =  " https://www.mapquestapi.com/geocoding/v1/address?key=" + apiKey + "&adminArea3=" + state + "&adminArea1=US&adminArea5=" + city + "&street=" + street;
         $.ajax({
             url: queryURL,
             method: "GET"
