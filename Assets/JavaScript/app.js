@@ -152,7 +152,7 @@ $("#submit").on("click", function () {
 
 
 
-
+  
     function mappingApi() {
         var apiKey = "jqnjIbmIDCL7UaGiP6SPvbfGTlGTs9z0";
         //     street = "";
@@ -166,8 +166,9 @@ $("#submit").on("click", function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(street + ", " + city + ", " + state + " " + zip);
+            
             $("#displayDiv").text("Latitude: " + response.results[0].locations[0].latLng.lat + " Longitude: " + response.results[0].locations[0].latLng.lng);
+            $("#displayDiv").append("<div>" +(street + ", " + city + ", " + state) +"</div>");
             console.log(response);
             var postalCode = response.results[0].locations[0].postalCode;
             var longitude = response.results[0].locations[0].latLng.lng;
@@ -185,7 +186,7 @@ $("#submit").on("click", function () {
                 icon: L.mapquest.icons.marker(),
                 draggable: false
             }).addTo(map);
-
+         
             function getIndex() {
                 var addressID = (Math.abs(longitude % latitude)) * 100000000;
                 console.log(addressID);
