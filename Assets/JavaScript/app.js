@@ -39,13 +39,13 @@ function songlistgetter(songlist) {
         //  console.log(songtitle);
 
 
-        //for (var y = 0; y < songtitle.length; y++) {
+        for (var y = 0; y < songtitle.length; y++) {
 
 
         // console.log(result);
         var song = result.parse.links[Math.floor((Math.random() * 100) + 1)]["*"]
         //  console.log(song)
-        // }
+         }
 
         $("#submit").on("click", function () {
 
