@@ -13,6 +13,7 @@
 
 
     <title>Song City Map</title>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
 </head>
 
 <body>
@@ -37,8 +38,8 @@
                     <label class="active" for="state">State</label>
                 </div>
                 <div class="input-field col s3">
-                    <input placeholder="92618" id="zip" type="text" class="validate">
-                    <label class="active" for="zip">Zip Code</label>
+                    <input placeholder="Controlla" id="zip" type="text" class="validate">
+                    <label class="active" for="zip">Song</label>
                 </div>
         </div>
         <div class="row center-align">
@@ -49,13 +50,16 @@
 
         <div class="row">
             <div class="col s12 iframe-container">
-                <div class="map center-align" id="map">
-                    <div class="gmap_canvas"><iframe width="600" height="350" id="gmap_canvas" src="https://maps.google.com/maps?q=510%20e%20peltason%20irvine&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                 <div class="map center-align" id="map">
+                    <!-- <div class="gmap_canvas"><iframe width="600" height="350" id="gmap_canvas" src="https://maps.google.com/maps?q=510%20e%20peltason%20irvine&t=&z=13&ie=UTF8&iwloc=&output=embed"
                             frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                    </div>
+                    </div> -->
                 </div>
+                <h2 id="displayDiv"></h2>
+               <!-- <div id="map"></div> -->
+
             </div>
-        </div>
+        </div> 
 
         <div class="row">
             <div class="col s5 music-row info">
@@ -79,6 +83,17 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="Assets/JavaScript/app.js"></script>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+   
+
+
+
 
 </body>
 
