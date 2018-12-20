@@ -3,14 +3,17 @@ var city = '';
 var state = '';
 var zip = '';
 
+// var config = {
+//     apiKey: "AIzaSyCsqAA0N5ZecFPjgh67UR5khs8DqzesYQs",
+//     authDomain: "songcityapp.firebaseapp.com",
+//     databaseURL: "https://songcityapp.firebaseio.com",
+//     projectId: "songcityapp",
+//     storageBucket: "songcityapp.appspot.com",
+//     messagingSenderId: "1087828312373"
+// };
+// firebase.initializeApp(config);
 
-
-
-
-
-
-
-
+//   database variable 
 
 //$(".artist").append(artistname);
 
@@ -20,7 +23,7 @@ function songlistgetter(songlist) {
     //console.log("songlist", songlist)
     $.ajax({
 
-        url: "https://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + songlist.title + "&prop=links",
+        url: "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=parse&format=json&page=" + songlist.title + "&prop=links",
         method: "GET"
     }).then(function (result) {
         //console.log(result.parse.links.length)
@@ -41,8 +44,8 @@ function songlistgetter(songlist) {
 
             event.preventDefault();
             var songArray = [];
-            
-            var queryURL =   "https://itunes.apple.com/search?term=" + song + "&limit=200";
+
+            var queryURL = "https://itunes.apple.com/search?term=" + song + "&limit=200";
             $.ajax({
                 url: queryURL,
                 dataType: "jsonp",
@@ -51,7 +54,7 @@ function songlistgetter(songlist) {
                     //     (songArray).push(response.results[i].trackName);
                     // }
                     console.log(response)
-                    
+
                     //         $('#title').html(response.results[0].trackName);
                     //         $('#artist').html(response.results[0].artistName);
                     //        $('#wiki').html(response.results[0].trackId);
@@ -61,7 +64,7 @@ function songlistgetter(songlist) {
 
 
 
-                    var queryURL =  "https://itunes.apple.com/lookup?id=" + response.results[0].trackId + " &limit=200";
+                    var queryURL = "https://itunes.apple.com/lookup?id=" + response.results[0].trackId + " &limit=200";
                     $.ajax({
                         url: queryURL,
                         dataType: "jsonp",
@@ -113,7 +116,7 @@ function songlistgetter(songlist) {
 
 
 $.ajax({
-    url:  "https://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category:Lists_of_songs_recorded_by_American_artists",
+    url: "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&format=json&list=categorymembers&cmtitle=Category:Lists_of_songs_recorded_by_American_artists",
 
     method: "GET"
 }).then(function (response) {
@@ -152,7 +155,7 @@ $("#submit").on("click", function () {
 
 
 
-  
+
     function mappingApi() {
         var apiKey = "jqnjIbmIDCL7UaGiP6SPvbfGTlGTs9z0";
         //     street = "";
@@ -161,14 +164,14 @@ $("#submit").on("click", function () {
 
 
 
-        var queryURL =  " https://www.mapquestapi.com/geocoding/v1/address?key=" + apiKey + "&adminArea3=" + state + "&adminArea1=US&adminArea5=" + city + "&street=" + street;
+        var queryURL = " https://www.mapquestapi.com/geocoding/v1/address?key=" + apiKey + "&adminArea3=" + state + "&adminArea1=US&adminArea5=" + city + "&street=" + street;
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            
+
             $("#displayDiv").text("Latitude: " + response.results[0].locations[0].latLng.lat + " Longitude: " + response.results[0].locations[0].latLng.lng);
-            $("#displayDiv").append("<div>" +(street + ", " + city + ", " + state) +"</div>");
+            $("#displayDiv").append("<div>" + (street + ", " + city + ", " + state) + "</div>");
             console.log(response);
             var postalCode = response.results[0].locations[0].postalCode;
             var longitude = response.results[0].locations[0].latLng.lng;
@@ -186,7 +189,7 @@ $("#submit").on("click", function () {
                 icon: L.mapquest.icons.marker(),
                 draggable: false
             }).addTo(map);
-         
+
             function getIndex() {
                 var addressID = (Math.abs(longitude % latitude)) * 100000000;
                 console.log(addressID);
@@ -204,62 +207,58 @@ $("#submit").on("click", function () {
     }
     mappingApi();
 });
-
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyDIn55RwHEEzeZ3UVwGxMG3V9LVWzcjZeE",
-    authDomain: "songcity-1544767995840.firebaseapp.com",
-    databaseURL: "https://songcity-1544767995840.firebaseio.com",
-    projectId: "songcity-1544767995840",
-    storageBucket: "songcity-1544767995840.appspot.com",
-    messagingSenderId: "821348327302"
-  };
-  firebase.initializeApp(config);
-
-//   database variable 
 var database = firebase.database();
 
 // Capture Button Click
-$(".submit").on("click", function (event) {
+$("#loveit").on("click", function (event) {
     // Don't refresh the page!
     event.preventDefault();
 
     //    // Address inputs
     street = $("#street").val().trim();
-    city = $("#city").val().trim();
+     city = $("#city").val().trim();
     state = $("#state").val().trim();
-   var titles = $("#title").val().trim();
-    var artists = $("#artist").val().trim();
-
+    var titles = $("#title")
+    var artists = $("#artist")
     database.ref().push({
         userstreet: street,
         usercity: city,
         userstate: state,
         usertitle: titles,
-        userartist:artists,
+        userartist: artists,
 
     })
 
-    
+
 });
 
 database.ref().on("child_added", function (snapshot) {
     var data = snapshot.val()
     console.log(data);
-    
-    var tdstreet = "<td>" + data.street + "</td>"
-    var tdcity = "<td>" + data.city + "</td>"
-    var tdstate = "<td>" + data.state + "</td>"
-    var tdtitle  = "<td>" + data.titles + "</td>"
-    var tdartist = "<td>" + data.artists + "</td>"
+
+    var tdstreet = "<P>" + data.street + "</P>"
+    var tdcity = "<P>" + data.city + "</P>"
+    var tdstate = "<P>" + data.state + "</P>"
+    var tdtitle = "<P>" + data.titles + "</p>"
+    var tdartist = "<P>" + data.artists + "</p>"
 
 
-    $("#displayDiv").append(tdstreet, tdcity, tdstate)
+    $("#displayDiv").html(tdstreet, tdcity, tdstate)
 
-    $('#title').append(tdtitle);
-    $('#artist').append(tdartist);
-    
-
+    $('#title').html(tdtitle);
+    $('#artist').html(tdartist);
 
 
+
+
+})
+
+
+
+
+
+
+$("#hateit").on("click", function () {
+
+    location.reload();
 })
